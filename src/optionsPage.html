@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spoiler Settings</title>
+    <link rel="stylesheet" href="./spoiler.css">
+    <script src="./js.cookie.min.js"></script>
+    <script src="./spoiler.js"></script>
+    <style>
+        body{
+            max-width: 80ch;
+            margin-inline: auto;
+        }
+    </style>
+</head>
+<body>
+    <form id="spoiler-options">
+        <h2>Toggle Warnings</h2>
+        <fieldset>
+            <input type="checkbox" id="spoiler-test" value="Example"><label for="spoiler-test">Example</label>
+            <input type="checkbox" id="spoiler-b" value="Spoiler B"><label for="spoiler-b">Spoiler B</label>
+            <input type="checkbox" id="spoiler-c" value="Spoiler C"><label for="spoiler-c">Spoiler C</label>
+            <input type="checkbox" id="spoiler-d" value="Spoiler D"><label for="spoiler-d">Spoiler D</label>
+        </fieldset>
+    
+        <input type="submit" value="Save">
+    </form>
+    
+    <p data-spoiler="Example">This is a test spoiler! If you have the Example option toggled, you will see this in a spoiler.</p>
+    
+    <p>
+        Dynamic Spoilers created by <a href="https://beefox.xyz">Beefox</a>.
+    </p>
+
+    <script>
+    function saveOptions(event){
+        event.preventDefault()
+        let form = document.getElementById("spoiler-options")
+        let selected = []
+        document.querySelectorAll("#spoiler-options fieldset input[type=checkbox]:checked").forEach((el)=>selected.push(el.value))
+        console.log(selected)
+        let optionsString = Cookies.get('options') ?? "{}"
+        let optionsJson = JSON.parse(optionsString)
+        optionsJson.content_warnings = selected
+        Cookies.set('options', JSON.stringify(optionsJson), {})
+        console.log(selected)
+        window.location.reload()
+    }
+    function loadOptions(){
+        let optionsString = Cookies.get('options') ?? "{}"
+        let optionsJson = JSON.parse(optionsString)
+        console.log(optionsJson)
+        let selected = optionsJson.content_warnings ?? []
+        selected.forEach(option => {
+            let checkbox = document.querySelector(`#spoiler-options fieldset [value="${option}"]`)
+            checkbox.checked = true;
+        })
+        document.getElementById("spoiler-options").addEventListener("submit",saveOptions)
+    }
+    window.addEventListener("DOMContentLoaded", loadOptions)
+    </script>
+</body>
+</html>

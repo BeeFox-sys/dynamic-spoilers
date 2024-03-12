@@ -1,0 +1,139 @@
+#spoiler-options {
+  --_checked: #aa0000;
+  --_checkedHover: #00ff00;
+  --_unchecked: #00aa00;
+  --_uncheckedHover: #ff0000;
+  --_text-color: black;
+  --_background-color: white;
+  border: var(--_text-color) 2px solid;
+  padding: 2rem;
+  width: 60ch;
+  max-width: 100%;
+  margin-inline: auto;
+  margin-block: 1rem;
+}
+#spoiler-options h2 {
+  text-align: center;
+}
+#spoiler-options fieldset {
+  margin-block: 2ch;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1ch;
+  justify-content: center;
+}
+#spoiler-options input[type=checkbox] {
+  display: none;
+}
+#spoiler-options label {
+  display: block;
+  border: var(--_unchecked) 2px solid;
+  padding: 1em;
+  position: relative;
+  text-align: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  text-decoration: none;
+  color: var(--_unchecked);
+  letter-spacing: -0.05em;
+  font-weight: bold;
+  width: fit-content;
+  cursor: pointer;
+  outline: none;
+}
+#spoiler-options label:hover, #spoiler-options label:focus {
+  background: var(--_uncheckedHover);
+  border: var(--_uncheckedHover) 2px solid;
+  color: var(--_background);
+  text-decoration: unset;
+  text-shadow: none;
+}
+#spoiler-options input:checked + label {
+  border: var(--_checked) 2px solid;
+  color: var(--_checked);
+}
+#spoiler-options input:checked + label:hover, #spoiler-options input:checked + label:focus {
+  background: var(--_checkedHover);
+  border: var(--_checkedHover) 2px solid;
+  color: var(--_background);
+  text-decoration: unset;
+  text-shadow: none;
+}
+#spoiler-options input[type=submit] {
+  display: block;
+  border: var(--text-color) 2px solid;
+  padding: 1em;
+  position: relative;
+  text-align: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: transparent;
+  text-decoration: none;
+  color: var(--text-color);
+  font-family: Syncopate;
+  letter-spacing: -0.05em;
+  font-weight: bold;
+  width: fit-content;
+  margin-inline: auto;
+  cursor: pointer;
+  outline: none;
+}
+#spoiler-options input[type=submit]:hover, #spoiler-options input[type=submit]:focus {
+  background: var(--white);
+  border: var(--white) 2px solid;
+  box-shadow: var(--white) 0 0 20px;
+  color: var(--_background);
+  text-decoration: unset;
+  text-shadow: none;
+}
+
+.spoiler {
+  --_hidden-color: #aaa;
+  --_unhidden-color: #ccc;
+  --_warning-color: #822;
+  --_warning-text-color: #fff;
+  --_text-color: #000;
+  transition-duration: 1s;
+  cursor: pointer;
+  position: relative;
+  background-color: var(--_unhidden-color);
+  color: var(--_text-color);
+}
+.spoiler::after {
+  opacity: 0;
+}
+.spoiler.hidden {
+  background-color: var(--_hidden-color);
+}
+.spoiler.hidden > * {
+  user-select: none;
+  opacity: 0;
+}
+.spoiler.hidden::after {
+  opacity: 1;
+  content: "Content Warning: " attr(data-spoiler) "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: fit-content;
+  display: block;
+  padding-inline: 1ch;
+  font-size: 0.9em;
+  line-height: 1.2em;
+  color: var(--_warning-text-color);
+  background: var(--_warning-color);
+  opacity: 0.8;
+}
+.spoiler.hidden:hover::after {
+  opacity: 1;
+}
+
+p.spoiler.hidden::after {
+  translate: -50% -50%;
+  left: 50%;
+  top: 50%;
+}
