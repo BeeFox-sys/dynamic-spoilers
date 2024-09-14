@@ -1,4 +1,5 @@
 function processSpoilers() {
+  console.log("Processing")
     let optionsString = Cookies.get('options') ?? "{}"
     let optionsJson = JSON.parse(optionsString)
 
@@ -13,8 +14,13 @@ function processSpoilers() {
 function createSpoiler(element){
     {
 
+        let nontext = false;
+
         let type = element.tagName
-        if(type=="IMG") type = "P"
+        //Modify this if you have more things that need to be perfectly preserved
+        if(["IMG"].includes(type.toUpperCase())) nontext = true
+
+        if(nontext) type = "P"
 
         let spoiler = document.createElement(type)
         let content = document.createElement("span")
@@ -54,4 +60,4 @@ function handleSpoiler(evt) {
     }
   }
 
-window.addEventListener("DOMContentLoaded",processSpoilers)
+window.addEventListener("load", processSpoilers)
